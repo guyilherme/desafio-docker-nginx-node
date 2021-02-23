@@ -14,15 +14,14 @@ const sql = 'INSERT INTO pessoas(name) values ("João")'
 
 connection.query(sql)
 
-// app.get('/', (req,res) => {
-//     res.send('<h1>Full Cycle Rocks!</h1>')
-// })
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 app.get('/', function(req, res) {
     var sql='SELECT name FROM pessoas'
     connection.query(sql, function (err, data, fields) {
     if (err) throw err
-    res.send(data)
+    res.render('index.ejs', {pessoas: data})
     connection.end
   });
 });
